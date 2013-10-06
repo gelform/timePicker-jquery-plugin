@@ -13,7 +13,6 @@
 .TPDatePicker small {display: block;}
 .TPDatePicker b {display: block; font-size: 2em;}
 
-.TPTimePicker {}
 .TPTimePickerTime {background: #9F9; border: 1px solid #333; display: inline-block; margin-right: .236em; padding: .236em 0; text-align: center; width: 6em;}
 .TPTimePickerTime small {display: block;}
 .TPTimePickerTime b {display: block; font-size: 2em;}
