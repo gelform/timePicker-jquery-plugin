@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,22 +31,29 @@
 		<p>All this requires is:</p>
 
 		<pre><code>
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;all&quot; href=&quot;css/jquery.timepicker.css&quot; /&gt;
-&lt;/head&gt;
-&lt;body&gt;
-	&lt;div id=&quot;basic&quot;&gt;&lt;/div&gt;
-	&lt;script src=&quot;http://code.jquery.com/jquery-1.10.1.min.js&quot;&gt;&lt;/script&gt;
-	&lt;script src=&quot;js/jquery.timepicker.min.js&quot;&gt;&lt;/script&gt;
-	&lt;script&gt;
+<?php 
+$html = <<<HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" media="all" href="css/jquery.timepicker.css" />
+</head>
+<body>
+	<div id="basic"></div>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="js/jquery.timepicker.min.js"></script>
+	<script>
 	$(document).ready(function(){
-		$(&#039;#basic&#039;).timePicker();
+		$('#basic').timePicker();
 	});
-	&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;		</code></pre>
+	</script>
+</body>
+</html>
+HTML;
+
+echo htmlspecialchars($html, ENT_QUOTES);
+ ?>
+		</code></pre>
 	</div><!-- container -->
 
 
