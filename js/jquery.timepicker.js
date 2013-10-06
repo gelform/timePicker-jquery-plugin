@@ -69,6 +69,7 @@ Date.prototype.getShortDayName = function () {
 				$datePickerDate
 				.addClass(settings.datePicker.date.className)
 				.attr('data-date', startDateObj.getTime() )
+				.attr('data-tp-role', 'datePickerDate' )
 				.html(renderDateTemplate(settings.datePicker.date.text, startDateObj))
 				.appendTo( $datePickerDates );
 
@@ -79,6 +80,9 @@ Date.prototype.getShortDayName = function () {
 				}
 
 				startDateObj.setDate(startDateObj.getDate()+1);
+
+				// callback
+				settings.datePicker.dates.added.call( $('[data-tp-role=datePickerDate]', $datePickerDates) );
 			}
 		}
 
@@ -88,10 +92,10 @@ Date.prototype.getShortDayName = function () {
 		function addTimePicker ($timePicker, dateObj)
 		{
 			// if there's a "htmlBefore" message, add it when there are dates chosen
-			if ( '' !== settings.timePicker.wrapper.htmlBefore && $('.' + settings.timePicker.wrapper.htmlBeforeClassName, $timePicker).length === 0 )
+			if ( '' !== settings.timePicker.wrapper.htmlBefore && $('[data-tp-role=timePickerHtmlBefore]', $timePicker).length === 0 )
 			{
 				$(settings.timePicker.wrapper.htmlBefore)
-				.addClass(settings.timePicker.wrapper.htmlBeforeClassName)
+				.attr('data-tp-role', 'timePickerHtmlBefore' )
 				.prependTo($timePicker);
 			}
 
@@ -102,6 +106,7 @@ Date.prototype.getShortDayName = function () {
 			$timePickerTime
 			.addClass(settings.timePicker.time.className)
 			.attr('data-date', dateObj.getTime() )
+			.attr('data-tp-role', 'timePickerTime' )
 			.html(renderDateTemplate(settings.timePicker.time.text, dateObj));
 
 			// create the select element
@@ -131,7 +136,7 @@ Date.prototype.getShortDayName = function () {
 			var appended = false;
 
 			// figure out if time is before the others
-			$('.' + settings.timePicker.time.className, $timePicker).each(function(){
+			$('[data-tp-role=timePickerTime]', $timePicker).each(function(){
 				if ( $(this).attr('data-date') > dateObj.getTime() )
 				{
 					$timePickerTime.insertBefore(this);
@@ -158,7 +163,7 @@ Date.prototype.getShortDayName = function () {
 			$('[data-date=' + dateObj.getTime() + ']', $timePicker).remove();
 
 			// if no more timepickers, empty it, to remove the message
-			if ( $('.' + settings.timePicker.time.className, $timePicker).length === 0 )
+			if ( $('[data-tp-role=timePickerTime]', $timePicker).length === 0 )
 			{
 				$timePicker.empty();
 			}
@@ -196,13 +201,14 @@ Date.prototype.getShortDayName = function () {
 			if ( '' !== settings.datePicker.wrapper.htmlBefore )
 			{
 				$(settings.datePicker.wrapper.htmlBefore)
-				.addClass(settings.datePicker.wrapper.htmlBeforeClassName)
+				.attr('data-tp-role', 'datePickerHtmlBefore' )
 				.appendTo($datePicker);
 			}
 
 			// add a class, and append it to the wrapper
 			$datePicker
 			.addClass(settings.datePicker.wrapper.className)
+			.attr('data-tp-role', 'datePicker' )
 			.appendTo($wrapper);
 
 
@@ -213,12 +219,15 @@ Date.prototype.getShortDayName = function () {
 			// add our class, html (even though our setting is "text") and our behavior
 			$datePickerPrev
 			.addClass(settings.datePicker.prev.className)
+			.attr('data-tp-role', 'datePickerPrev' )
 			.html(settings.datePicker.prev.text)
 			.on('click',
 				function()
 				{
+					settings.datePicker.prev.clicked.call($(this));
+
 					// get first date, and make it an object
-					var $firstDate = $('.' + settings.datePicker.date.className + ':first', $datePicker);
+					var $firstDate = $('[data-tp-role=datePickerDate]:first', $datePicker);
 					var dateStr = parseInt($firstDate.attr('data-date'), 10);
 					var startDate = new Date(dateStr);
 
@@ -242,6 +251,9 @@ Date.prototype.getShortDayName = function () {
 
 					// add dates boxes based on new start date
 					addDateBoxes ($datePickerDates, startDate);
+
+					// callback
+					settings.datePicker.prev.finished.call($(this));
 				}
 			)
 			.appendTo($datePicker);
@@ -254,11 +266,14 @@ Date.prototype.getShortDayName = function () {
 			// add our class, html (even though our setting is "text") and our behavior
 			$datePickerDates
 			.addClass(settings.datePicker.dates.className)
+			.attr('data-tp-role', 'datePickerDates' )
 			.on('click',
-				'.' + settings.datePicker.date.className,
+				'[data-tp-role=datePickerDate]',
 				function()
 				{
-					// don't do anytihng if all our dates are already selected
+					settings.datePicker.date.clicked.call($(this));
+
+					// get number of selected dates
 					var selectedDatesArrLength = 0;
 					for (var e in $.fn.timePicker.variables.selectedDatesArr) { selectedDatesArrLength++; }
 
@@ -296,6 +311,9 @@ Date.prototype.getShortDayName = function () {
 					{
 						$this.toggleClass(settings.datePicker.date.selectedClassName);
 					}
+
+					// callback
+					settings.datePicker.date.finished.call($(this));
 				}
 			)
 			.appendTo($datePicker);
@@ -308,12 +326,15 @@ Date.prototype.getShortDayName = function () {
 			// add our class, html (even though our setting is "text") and our behavior
 			$datePickerNext
 			.addClass(settings.datePicker.next.className)
+			.attr('data-tp-role', 'datePickerNext' )
 			.html(settings.datePicker.next.text)
 			.on('click',
 				function()
 				{
+					settings.datePicker.next.clicked.call($(this));
+
 					// get first date, and make it an object
-					var $firstDate = $('.' + settings.datePicker.date.className + ':first', $datePicker);
+					var $firstDate = $('[data-tp-role=datePickerDate]:first', $datePicker);
 					var dateStr = parseInt($firstDate.attr('data-date'), 10);
 
 					var startDate = new Date(dateStr);
@@ -326,6 +347,9 @@ Date.prototype.getShortDayName = function () {
 
 					// add our date boxes
 					addDateBoxes ($datePickerDates, startDate);
+
+					// callback
+					settings.datePicker.next.finished.call($(this));
 				}
 			)
 			.appendTo($datePicker);
@@ -338,6 +362,7 @@ Date.prototype.getShortDayName = function () {
 			// add our class and append it to the wrapper
 			$timePicker
 			.addClass(settings.timePicker.wrapper.className)
+			.attr('data-tp-role', 'timePicker' )
 			.appendTo($wrapper);
 
 
@@ -359,42 +384,46 @@ Date.prototype.getShortDayName = function () {
 
 	$.fn.timePicker.defaults = {
 		numberOfTimes: 3,
-
 		datePicker: {
 			numOfDates: 5,
 			allowPastDates: false,
 			wrapper: {
-				htmlBefore: '<p>First, choose three dates:</p>', // must be html
-				htmlBeforeClassName: 'TPDatePickerHtmlBefore',
+				htmlBefore: '<p class="TPDatePickerHtmlBefore">First, choose three dates:</p>', // must be html
 				html: '<div />',
 				className: 'TPDatePicker'
 			},
 			prev: {
 				className: 'TPDatePickerPrev',
 				html: '<span />',
-				text: '&#9664;' // prev
+				text: '&#9664;',
+				clicked: function(){}, // this = the $datePickerPrev just clicked
+				finished: function(){} // this = the $datePickerPrev just clicked
 			},
 			dates: {
 				className: 'TPDatePickerDates',
-				html: '<span />'
+				html: '<span />',
+				added: function(){} // this = a jQuery array of the date elements just added
 			},
 			date: {
 				className: 'TPDatePickerDate',
 				selectedClassName: 'selected',
 				addSelectedClassOnClick: true, // for bootstrap
 				html: '<span />',
-				text: '<small>shortMonthName</small> <b>date</b> <small>shortDayName</small>'
+				text: '<small>shortMonthName</small> <b>date</b> <small>shortDayName</small>',
+				clicked: function(){}, // this = the $datePickerDate just clicked
+				finished: function(){} // this = the $datePickerDate just clicked
 			},
 			next: {
 				className: 'TPDatePickerNext',
 				html: '<span />',
-				text: '&#9654;' // next
+				text: '&#9654;',
+				clicked: function(){}, // this = the $datePickerNext just clicked
+				finished: function(){} // this = the $datePickerNext just clicked
 			}
 		}, // datePicker
 		timePicker: {
 			wrapper: {
-				htmlBefore: '<p>Now, please select your available times:</p>', // must be html
-				htmlBeforeClassName: 'TPTimePickerHtmlBefore',
+				htmlBefore: '<p class="TPTimePickerHtmlBefore">Now, please select your available times:</p>', // must be html
 				html: '<div />',
 				className: 'TPTimePicker'
 			},

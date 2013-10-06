@@ -8,6 +8,30 @@
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link rel="stylesheet" type="text/css" media="all" href="css/jquery.timepicker.css" />
 
+
+<style>
+.BSDatePicker {margin-bottom: 1em;}
+.BSDatePickerPrev,
+.BSDatePickerNext {cursor: pointer; display: inline-block; font-size: 3em; text-align: center; vertical-align: middle;
+-webkit-user-select: none; /* webkit (safari, chrome) browsers */
+-moz-user-select: none; /* mozilla browsers */
+-khtml-user-select: none; /* webkit (konqueror) browsers */
+-ms-user-select: none; /* IE10+ */
+}
+
+.BSDatePickerDate {cursor: pointer; display: inline-block; margin-right: .236em; padding: 1em; text-align: center; width: 5em;}
+.BSDatePickerDate small {display: block;}
+.BSDatePickerDate b {display: block; font-size: 2em;}
+
+.BSTimePickerTime {display: inline-block; margin-right: .236em; padding: .236em 1em; text-align: center;}
+.BSTimePickerTime small {display: block;}
+.BSTimePickerTime b {display: block; font-size: 2em;}
+.BSTimePickerTime select { margin-top: .618em; width: 100%;}
+
+#dl-settings dl {line-height: 1em; margin: 0;}
+#dl-settings dt {font-size: 1.382em;}
+#dl-settings dd {margin-left: 4em;}
+</style>
 </head>
 <body>
 
@@ -23,7 +47,19 @@
 			The time pickers return an array of parameters, time[], by default.
 		</p>
 
+		<p>
+			<a href="https://github.com/coreymaass/timePicker" target="_blank" class="btn btn-primary">Down load it from Github</a>
+		</p>
+
+
+
 		<hr />
+
+
+
+		<h2>Examples:</h2>
+
+
 
 		<p>Here's a basic example:</p>
 
@@ -47,18 +83,245 @@
 	});
 	&lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;		</code></pre>
+&lt;/html&gt; 	</code></pre>
+
+
+
+		<hr />
+
+
+
+		<p>Here's a bootstrap integration example:</p>
+
+
+
+		<div class="well" id="bootstrap"></div>
+
+
+		<p>
+			We'll change a few things to make this work. First, we'll make the dates wrapper a button group, and each date a button. Similarly, we'll make each time picker a Bootstrap well. We could've also just changed the class.
+		</p>
+
+		<p>
+			The gotcha is changing the "selectedClassName" (the class added to each date when it's selected) to "active" to match Bootstrap. FInally we want to set "addSelectedClassOnClick" to false. Bootstrap will automatically add the class "active" to a clicked button, so we don't want our plugin to toggle it, which will turn it off.
+		</p>
+
+		<pre><code>
+$(&#039;#bootstrap&#039;).timePicker({
+	datePicker: {
+		dates: {
+			html: &#039;&lt;span class=&quot; btn-group&quot; data-toggle=&quot;buttons-checkbox&quot; /&gt;&#039;,
+		},
+		date: {
+			html: &#039;&lt;button type=&quot;button&quot; class=&quot;btn&quot; /&gt;&#039;,
+			selectedClassName: &#039;active&#039;,
+			addSelectedClassOnClick: false
+		}
+	},
+	timePicker: {
+		time: {
+			html: &#039;&lt;span class=&quot;well&quot; /&gt;&#039;,
+		}
+	}
+}); 	</code></pre>
+
+
+ 	<p>These settings are available like this, too:</p>
+
+
+		<pre><code>
+$.fn.timePicker.defaults.datePicker.date.html = &#039;&lt;button type=&quot;button&quot; class=&quot;btn&quot; /&gt;&#039;;
+$.fn.timePicker.defaults.datePicker.date.selectedClassName = &#039;active&#039;;
+$.fn.timePicker.defaults.datePicker.date.addSelectedClassOnClick = false;
+$.fn.timePicker.defaults.timePicker.time.html = &#039;&lt;span class=&quot;well&quot; /&gt;&#039;;
+
+$(&#039;#bootstrap&#039;).timePicker(); 	</code></pre>
+
+
+
+
+	<h2>Settings:</h2>
+
+	<p>Here's an explaination of the available settings:</p>
+
+	<dl id="dl-settings">
+		<dt>numberOfTimes</dt>
+		<dd>default: 3</dd>
+		<dt>datePicker:</dt>
+		<dd>
+			<dl>
+				<dt>numOfDates</dt>
+				<dd>default: 3</dd>
+				<dt>allowPastDates</dt>
+				<dd>default: false</dd>
+				<dt>wrapper:</dt>
+				<dd>
+					<dl>
+						<dt>htmlBefore</dt>
+						<dd>default: &lt;p&gt;First, choose three dates:&lt;/p&gt;</dd>
+						<dt>htmlBeforeClassName</dt>
+						<dd>default: TPDatePickerHtmlBefore</dd>
+						<dt>html</dt>
+						<dd>default: &lt;div /&gt;</dd>
+						<dt>className</dt>
+						<dd>default: TPDatePicker</dd>
+					</dl>
+				<dt>prev:</dt>
+				<dd>
+					<dl>
+						<dt>className</dt>
+						<dd>default: TPDatePickerPrev</dd>
+						<dt>html</dt>
+						<dd>default: &lt;span /&gt;</dd>
+						<dt>text</dt>
+						<dd>default: &amp;#9664;</dd>
+						<dt>clicked</dt>
+						<dd>this = the $datePickerPrev just clicked</dd>
+					</dl>
+				</dd>
+				<dt>dates:</dt>
+				<dd>
+					<dl>
+						<dt>className</dt>
+						<dd>default: TPDatePickerDates</dd>
+						<dt>html</dt>
+						<dd>default: &lt;span /&gt;</dd>
+						<dt>added</dt>
+						<dd>this = a jQuery array of the date elements just added</dd>
+					</dl>
+				</dd>
+				<dt>date:</dt>
+				<dd>
+					<dl>
+						<dt>className</dt>
+						<dd>default: TPDatePickerDate</dd>
+						<dt>selectedClassName</dt>
+						<dd>default: selected</dd>
+						<dt>addSelectedClassOnClick</dt>
+						<dd>for bootstrap. default: true</dd>
+						<dt>html</dt>
+						<dd>default: &lt;span /&gt;</dd>
+						<dt>text</dt>
+						<dd>default: &lt;small&gt;shortMonthName&lt;/small&gt; &lt;b&gt;date&lt;/b&gt; &lt;small&gt;shortDayName&lt;/small&gt;</dd>
+						<dt>Clicked</dt>
+						<dd>this = the $datePickerDate just clicked</dd>
+					</dl>
+				</dd>
+				<dt>next:</dt>
+				<dd>
+					<dl>
+						<dt>className</dt>
+						<dd>default: TPDatePickerNext</dd>
+						<dt>html</dt>
+						<dd>default: &lt;span /&gt;</dd>
+						<dt>text</dt>
+						<dd>default: &amp;#9654;</dd>
+						<dt>clicked</dt>
+						<dd>this = the $datePickerNext just clicked</dd>
+					</dl>
+				</dd>
+			</dl>
+		</dd>
+		<dt>timePicker:</dt>
+		<dd>
+			<dl>
+				<dt>wrapper:</dt>
+				<dd>
+					<dl>
+						<dt>htmlBefore</dt>
+						<dd>Must be html. default: &lt;p&gt;Now, please select your available times:&lt;/p&gt;</dd>
+						<dt>htmlBeforeClassName</dt>
+						<dd>TPTimePickerHtmlBefore</dd>
+						<dt>html</dt>
+						<dd>&lt;div /&gt;</dd>
+						<dt>className</dt>
+						<dd>default: TPTimePicker</dd>
+					</dl>
+				</dd>
+				<dt>time:</dt>
+				<dd>
+					<dl>
+						<dt>className</dt>
+						<dd>default: TPTimePickerTime</dd>
+						<dt>preSelected</dt>
+						<dd>default: 7:00am</dd>
+						<dt>startTime</dt>
+						<dd>in 24h. default: 6:00</dd>
+						<dt>endTime</dt>
+						<dd>in 24h. default: 19:00</dd>
+						<dt>interval</dt>
+						<dd>in minutes. default: 15</dd>
+						<dt>selectFieldName</dt>
+						<dd>default: time</dd>
+						<dt>html</dt>
+						<dd>default: &lt;span /&gt;</dd>
+						<dt>text</dt>
+						<dd>default: &lt;small&gt;shortMonthName&lt;/small&gt; &lt;b&gt;date&lt;/b&gt; &lt;small&gt;shortDayName&lt;/small&gt;</dd>
+						<dt>added</dt>
+						<dd>this = the $timePickerTime just added.</dd>
+						<dt>removed</dt>
+						<dd>this = the $timePicker wrapper</dd>
+					</dl>
+				</dd>
+			</dl>
+		</dd>
+	</dl>
+
+
+
 	</div><!-- container -->
 
 
 
 
+
+
+
+
+
+
+
+
+
+
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="js/jquery.timepicker.min.js"></script>
 	<script>
 	$(document).ready(function(){
 		$('#basic').timePicker();
+
+
+
+		$('#bootstrap').timePicker({
+			datePicker: {
+				wrapper: {
+					className: 'BSDatePicker'
+				},
+				prev: {
+					className: 'BSDatePickerPrev',
+				},
+				dates: {
+					html: '<span class=" btn-group" data-toggle="buttons-checkbox" />',
+					className: 'BSDatePickerDates',
+				},
+				date: {
+					html: '<button type="button" class="btn" />',
+					className: 'BSDatePickerDate',
+					selectedClassName: 'active',
+					addSelectedClassOnClick: false
+				},
+				next: {
+					className: 'BSDatePickerNext',
+				}
+			},
+			timePicker: {
+				time: {
+					html: '<span class="well" />',
+					className: 'BSTimePickerTime'
+				}
+			}
+		});
 	});
 	</script>
 </body>
