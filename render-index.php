@@ -48,7 +48,23 @@
 		</p>
 
 		<p>
-			The time pickers return an array of parameters, time[], by default.
+			The time pickers return an array of dates containing a date (in yyyy-mm-dd format) and 24-hour time (hh:mm), by default. Here's what it would look like in PHP:
+			<pre><code>
+$schedule = array (
+	"1381107061051" => array (
+		"date" => "2013-10-06",
+		"time" => "07:00"
+	),
+	"1381193461051" => array (
+		"date" => "2013-10-07",
+		"time" => "15:00"
+	),
+	"1381279861051" => array (
+		"date" => "2013-10-08",
+		"time" => "16:00"
+	)
+);
+			</code></pre>
 		</p>
 
 		<p>
@@ -175,6 +191,8 @@ echo htmlspecialchars($html, ENT_QUOTES);
 	<dl id="dl-settings">
 		<dt>numberOfTimes <i>Int</i></dt>
 		<dd>The number of times you want to allow people to select. default: 3</dd>
+		<dt>fieldName <i>Str</i></dt>
+		<dd>The name of the array passed when the form gets submitted. default: schedule</dd>
 		<dt>datePicker:</dt>
 		<dd>
 			The element that contains the prev, next buttons, and the calendar boxes

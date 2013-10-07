@@ -27,8 +27,21 @@ Date.prototype.getDayName = function() {
     return this.dayNames[this.getDay()];
 };
 
-Date.prototype.getShortDayName = function () {
+Date.prototype.getShortDayName = function ()
+{
     return this.getDayName().substr(0, 3);
+};
+
+Date.prototype.toMysqlDate = function()
+{
+	function twoDigits(d)
+	{
+		if(0 <= d && d < 10) {return "0" + d.toString();}
+		if(-10 < d && d < 0) {return "-0" + (-1*d).toString();}
+		return d.toString();
+	}
+
+    return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate());
 };
 
 
@@ -109,19 +122,22 @@ Date.prototype.getShortDayName = function () {
 			.attr('data-tp-role', 'timePickerTime' )
 			.html(renderDateTemplate(settings.timePicker.time.text, dateObj));
 
+			// add hidden date field
+			$('<input type="hidden" name="' + settings.fieldName + '[' + dateObj.getTime() + '][' + settings.datePicker.date.hiddenFieldName + ']" value="' + dateObj.toMysqlDate() + '" />').appendTo($timePickerTime);
+
 			// create the select element
 			var $select = $('<select></select>');
 			$select
-			.attr('name', settings.timePicker.time.selectFieldName + '[]')
+			.attr('name', settings.fieldName + '[' + dateObj.getTime() + '][' + settings.timePicker.time.selectFieldName + ']')
 			.appendTo($timePickerTime);
 
 			// create an array of the times for the select
 			var friendlyTimesArr = $.fn.timePicker.createFriendlyTimesArr(settings.timePicker.time.startTime, settings.timePicker.time.endTime, settings.timePicker.time.interval);
 
 			// add the options to the select from the times arr
-			for (var i = 0; i < friendlyTimesArr.length; i++)
+			for (var i in friendlyTimesArr)
 			{
-				var $option = $('<option value="' + friendlyTimesArr[i] + '">' + friendlyTimesArr[i] + '</option>');
+				var $option = $('<option value="' + i + '">' + friendlyTimesArr[i] + '</option>');
 
 				// select the default time, from the preSelected setting
 				if ( friendlyTimesArr[i] === settings.timePicker.time.preSelected )
@@ -384,6 +400,7 @@ Date.prototype.getShortDayName = function () {
 
 	$.fn.timePicker.defaults = {
 		numberOfTimes: 3,
+		fieldName: 'schedule',
 		datePicker: {
 			numOfDates: 5,
 			allowPastDates: false,
@@ -408,6 +425,7 @@ Date.prototype.getShortDayName = function () {
 				className: 'TPDatePickerDate',
 				selectedClassName: 'selected',
 				addSelectedClassOnClick: true, // for bootstrap
+				hiddenFieldName: 'date',
 				html: '<span />',
 				text: '<small>shortMonthName</small> <b>date</b> <small>shortDayName</small>',
 				clicked: function(){}, // this = the $datePickerDate just clicked
@@ -496,6 +514,11 @@ Date.prototype.getShortDayName = function () {
 	// create an array of times based on a start time, and end time, and a minute interval 
 	$.fn.timePicker.createFriendlyTimesArr = function (startTimeStr, endTimeStr, interval)
 	{
+		function addLeadingZero(n)
+		{
+			return n.length === 1 ? '0' + n : n;
+		}
+
 		if ( undefined === startTimeStr )
 		{
 			startTimeStr = '00:00';
@@ -509,20 +532,20 @@ Date.prototype.getShortDayName = function () {
 		while (endTime >= startTime )
 		{
 			// get minutes, as string
-			var m = '' + startTime.getMinutes();
-
-			// add leading zero
-			if ( m.length === 1 ) { m = '0' + m;}
+			var m = addLeadingZero('' + startTime.getMinutes());
 
 			// get hours, and add am/pm
 			var h = startTime.getHours();
+			var k = addLeadingZero('' + h) + ':' + m;
+
 			if ( h === 0 ) { h = 12 + ':' + m + 'am'; }
 			else if ( h < 12 ) { h = h + ':' + m + 'am'; }
 			else if ( h === 12 ) { h = 12 + ':' + m + 'pm'; }
 			else { h = (h - 12) + ':' + m + 'pm'; }
 
+
 			// add the final string to the array
-			timesArr.push( h );
+			timesArr[k] = h;
 
 			// move forward by the interval
 			startTime.setTime(startTime.getTime() + (interval * 60 * 1000));
