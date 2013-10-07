@@ -1,6 +1,8 @@
 ;
 /**
  * developed by Gelform Inc. http://gelform.com
+ * more info at https://github.com/coreymaass/timePicker
+ * examples at http://gelform.com/timepicker
  */
 
 
