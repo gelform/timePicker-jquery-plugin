@@ -17,7 +17,12 @@
 
 
 /* Styles for time pickers */
-.TPTimePickerTime {background: #9F9; border: 1px solid #333; display: inline-block; margin-right: .236em; padding: .236em 0; text-align: center; width: 6em;}
-.TPTimePickerTime small {display: block;}
-.TPTimePickerTime b {display: block; font-size: 2em;}
+.TPTimePickerTime,
+.TPTimePickerPlaceholder {background: #9F9; border: 1px solid #333; display: inline-block; margin-right: .236em; padding: .236em 0; text-align: center; width: 6em; vertical-align: top;}
+.TPTimePickerTime small,
+.TPTimePickerPlaceholder small {display: block;}
+.TPTimePickerTime b,
+.TPTimePickerPlaceholder b {display: block; font-size: 2em;}
 .TPTimePickerTime select {width: 100%;}
+
+.TPTimePickerPlaceholder {background: #CCC; color: #999;}

@@ -89,7 +89,7 @@ Date.prototype.toMysqlDate = function()
 				.appendTo( $datePickerDates );
 
 				// if this date has been chosen, add the "selected" class name
-				if ( undefined !== $.fn.timePicker.variables.selectedDatesArr[startDateObj.getTime()] )
+				if ( undefined !== variables.selectedDatesArr[startDateObj.getTime()] )
 				{
 					$datePickerDate.addClass(settings.datePicker.date.selectedClassName);
 				}
@@ -136,6 +136,11 @@ Date.prototype.toMysqlDate = function()
 			// create an array of the times for the select
 			var friendlyTimesArr = $.fn.timePicker.createFriendlyTimesArr(settings.timePicker.time.startTime, settings.timePicker.time.endTime, settings.timePicker.time.interval);
 
+			if ( settings.timePicker.showPlaceholders )
+			{
+				$('[data-tp-role=timePickerPlaceholder]:first', $timePicker).remove();
+			}
+
 			// add the options to the select from the times arr
 			for (var i in friendlyTimesArr)
 			{
@@ -175,6 +180,22 @@ Date.prototype.toMysqlDate = function()
 
 
 
+		function addTimePlaceholder ($timePicker)
+		{
+			// create a time element
+			var $timePickerTime = $(settings.timePicker.placeholder.html);
+
+			// add a class, the data-date attr we use to match elements, and populate the html from the "template" html setting
+			$timePickerTime
+			.addClass(settings.timePicker.placeholder.className)
+			.attr('data-tp-role', 'timePickerPlaceholder' )
+			.html(settings.timePicker.placeholder.text);
+
+			$timePickerTime.appendTo($timePicker);
+		}
+
+
+
 		// if a date is unselected, remove it's corresponding time picker
 		function removeTimePicker ($timePicker, dateObj)
 		{
@@ -183,7 +204,12 @@ Date.prototype.toMysqlDate = function()
 			// if no more timepickers, empty it, to remove the message
 			if ( $('[data-tp-role=timePickerTime]', $timePicker).length === 0 )
 			{
-				$timePicker.empty();
+				$('[data-tp-role=timePickerHtmlBefore]', $timePicker).remove();
+			}
+
+			if ( settings.timePicker.showPlaceholders )
+			{
+				addTimePlaceholder($timePicker);
 			}
 
 			// trigger our callback 
@@ -198,11 +224,25 @@ Date.prototype.toMysqlDate = function()
 
 
 		// extend SEETTINGS
+
+
+
 		var settings = $.extend( true, {}, $.fn.timePicker.defaults, options);
 
 
 
 		// end SETTINGS
+		// START VARIABLES
+
+
+
+		var variables = {
+			selectedDatesArr: []
+		};
+
+
+
+		// end VARIABLES
 		// start PLUGIN
 		
 
@@ -250,13 +290,13 @@ Date.prototype.toMysqlDate = function()
 					var startDate = new Date(dateStr);
 
 					// don't allow previous dates
-					if ( !settings.datePicker.allowPastDates && startDate.toDateString() === $.fn.timePicker.variables.now.toDateString() )
+					if ( !settings.datePicker.allowPastDates && startDate.toDateString() === settings.datePicker.startDate.toDateString() )
 					{
 						return false;
 					}
 
 					// if somehow we got before today, and don't allow previous dates
-					if ( !settings.datePicker.allowPastDates && startDate < $.fn.timePicker.variables.now )
+					if ( !settings.datePicker.allowPastDates && startDate < settings.datePicker.startDate )
 					{
 						return false;
 					}
@@ -289,11 +329,14 @@ Date.prototype.toMysqlDate = function()
 				'[data-tp-role=datePickerDate]',
 				function()
 				{
+					// trigger callback
 					settings.datePicker.date.clicked.call($(this));
+
+
 
 					// get number of selected dates
 					var selectedDatesArrLength = 0;
-					for (var e in $.fn.timePicker.variables.selectedDatesArr) { selectedDatesArrLength++; }
+					for (var e in variables.selectedDatesArr) { selectedDatesArrLength++; }
 
 
 
@@ -301,7 +344,7 @@ Date.prototype.toMysqlDate = function()
 					var dateStr = parseInt($this.attr('data-date'), 10);
 
 					// we store our selected dates in selectedDatesArr. if we don't find it, add it.
-					if ( undefined === $.fn.timePicker.variables.selectedDatesArr[dateStr] )
+					if ( undefined === variables.selectedDatesArr[dateStr] )
 					{
 						// we already have all the dates we want, cancel
 						if ( selectedDatesArrLength >= settings.numberOfTimes )
@@ -310,7 +353,7 @@ Date.prototype.toMysqlDate = function()
 						}
 
 						// otherwise add our selected date to selectedDatesArr
-						$.fn.timePicker.variables.selectedDatesArr[dateStr] = 1;
+						variables.selectedDatesArr[dateStr] = 1;
 
 						// and add the timepicker element
 						addTimePicker($timePicker, new Date(dateStr));
@@ -318,7 +361,7 @@ Date.prototype.toMysqlDate = function()
 					else
 					{
 						// if we're unselecting a time, delete it from selectedDatesArr.
-						delete $.fn.timePicker.variables.selectedDatesArr[dateStr];
+						delete variables.selectedDatesArr[dateStr];
 
 						// and remove the timepicker element
 						removeTimePicker($timePicker, new Date(dateStr));
@@ -384,8 +427,19 @@ Date.prototype.toMysqlDate = function()
 			.appendTo($wrapper);
 
 
+
+			if ( settings.timePicker.showPlaceholders )
+			{
+				for (var i = 0; i < 3; i++)
+				{
+					addTimePlaceholder($timePicker);
+				}
+			}
+
+
+
 			// add dates for the first time
-			addDateBoxes($datePickerDates, new Date($.fn.timePicker.variables.now.getTime()));
+			addDateBoxes($datePickerDates, new Date(settings.datePicker.startDate.getTime()));
 		});
 
 		// end PLUGIN
@@ -404,6 +458,7 @@ Date.prototype.toMysqlDate = function()
 		numberOfTimes: 3,
 		fieldName: 'schedule',
 		datePicker: {
+			startDate: new Date(), // the first date that will be shown 
 			numOfDates: 5,
 			allowPastDates: false,
 			wrapper: {
@@ -442,6 +497,7 @@ Date.prototype.toMysqlDate = function()
 			}
 		}, // datePicker
 		timePicker: {
+			showPlaceholders: true,
 			wrapper: {
 				htmlBefore: '<p class="TPTimePickerHtmlBefore">Now, please select your available times:</p>', // must be html
 				html: '<div />',
@@ -458,6 +514,11 @@ Date.prototype.toMysqlDate = function()
 				text: '<small>shortMonthName</small> <b>date</b> <small>shortDayName</small>',
 				added: function(){}, // this = the $timePickerTime just added
 				removed: function(){} // this = the $timePicker wrapper
+			},
+			placeholder: {
+				html: '<span />',
+				className: 'TPTimePickerPlaceholder',
+				text: '<small>Please</small><small>Pick</small> <b>3</b>',
 			}
 		} // timePicker
 	};
@@ -465,18 +526,9 @@ Date.prototype.toMysqlDate = function()
 
 
 	// end DEFAULTS
-	// start VARIABLES
 
 
 
-	$.fn.timePicker.variables = {
-		selectedDatesArr: [],
-		now: new Date()
-	};
-
-
-
-	// end VARIABLES
 	// start EXTRAS
 
 
