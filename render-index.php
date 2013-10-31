@@ -234,13 +234,13 @@ $('#callback').timePicker({
 			// trigger this whenever a date item is clicked
 			finished: function(){
 				// get our whole date picker element
-				var $wrapper = $('#callback');
+				var \$wrapper = $('#callback');
 
 				// get the timepickers element
-				var $timePickers = $('[data-tp-role=timePickerTime]', $wrapper);
+				var \$timePickers = $('[data-tp-role=timePickerTime]', \$wrapper);
 
 				// if there are 3 of them, we're good!
-				if ( $timePickers.length >= 3 )
+				if ( \$timePickers.length >= 3 )
 				{
 					// enable our button, and change the text
 					$('#btn-callback')

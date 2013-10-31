@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
-<head>
+<!-- saved from url=(0073)http://jquerytimepicker.local/render-index.php?codekitCB=404921296.853070 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>timePicker jQuery plugin</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Bootstrap -->
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link rel="stylesheet" type="text/css" media="all" href="css/jquery.timepicker.css" />
+	<link href="http://jquerytimepicker.local/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" type="text/css" media="all" href="./index_files/jquery.timepicker.css">
 
 
 <style>
@@ -33,15 +33,15 @@
 #dl-settings dd {margin-left: 4em;}
 #dl-settings i {color: #999; font-size: .82em; font-weight: normal;}
 </style>
-</head>
-<body>
+<style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }[touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }</style></head>
+<body style="">
 
 
 
 	<div class="container">
 		<h1>TimePicker plugin for jQuery</h1>
 		
-		<p class="lead">Built by <a href="http://gelform.com" target="_blank">Gelform</a></p>
+		<p class="lead">Built by <a href="http://gelform.com/" target="_blank">Gelform</a></p>
 
 		<p>
 			This plugin is for letting a user choose dates and then corresponding times. I built it to allow users to let me know when they're available for phone calls.
@@ -49,23 +49,23 @@
 
 		<p>
 			The time pickers return an array of dates containing a date (in yyyy-mm-dd format) and 24-hour time (hh:mm), by default. Here's what it would look like in PHP:
-			<pre><code>
+			</p><pre><code>
 $schedule = array (
-	"1381107061051" => array (
-		"date" => "2013-10-06",
-		"time" => "07:00"
+	"1381107061051" =&gt; array (
+		"date" =&gt; "2013-10-06",
+		"time" =&gt; "07:00"
 	),
-	"1381193461051" => array (
-		"date" => "2013-10-07",
-		"time" => "15:00"
+	"1381193461051" =&gt; array (
+		"date" =&gt; "2013-10-07",
+		"time" =&gt; "15:00"
 	),
-	"1381279861051" => array (
-		"date" => "2013-10-08",
-		"time" => "16:00"
+	"1381279861051" =&gt; array (
+		"date" =&gt; "2013-10-08",
+		"time" =&gt; "16:00"
 	)
 );
 			</code></pre>
-		</p>
+		<p></p>
 
 		<p>
 			<a href="https://github.com/coreymaass/timePicker" target="_blank" class="btn btn-primary">Download it from Github</a>
@@ -73,7 +73,7 @@ $schedule = array (
 
 
 
-		<hr />
+		<hr>
 
 
 
@@ -83,7 +83,7 @@ $schedule = array (
 
 		<p>Here's a basic example:</p>
 
-		<div class="well" id="basic"></div>
+		<div class="well" id="basic"><div class="TPDatePicker" data-tp-role="datePicker"><p class="TPDatePickerHtmlBefore" data-tp-role="datePickerHtmlBefore">First, choose three dates:</p><span class="TPDatePickerPrev" data-tp-role="datePickerPrev">&#9664;</span><span class="TPDatePickerDates" data-tp-role="datePickerDates"><span class="TPDatePickerDate" data-date="1383231870049" data-tp-role="datePickerDate"><small>Oct</small> <b>31</b> <small>Thu</small></span><span class="TPDatePickerDate" data-date="1383318270049" data-tp-role="datePickerDate"><small>Nov</small> <b>1</b> <small>Fri</small></span><span class="TPDatePickerDate" data-date="1383404670049" data-tp-role="datePickerDate"><small>Nov</small> <b>2</b> <small>Sat</small></span><span class="TPDatePickerDate" data-date="1383494670049" data-tp-role="datePickerDate"><small>Nov</small> <b>3</b> <small>Sun</small></span><span class="TPDatePickerDate" data-date="1383581070049" data-tp-role="datePickerDate"><small>Nov</small> <b>4</b> <small>Mon</small></span></span><span class="TPDatePickerNext" data-tp-role="datePickerNext">&#9654;</span></div><div class="TPTimePicker" data-tp-role="timePicker"><span class="TPTimePickerPlaceholder" data-tp-role="timePickerPlaceholder"><small>Please</small><small>Pick</small> <b>3</b></span><span class="TPTimePickerPlaceholder" data-tp-role="timePickerPlaceholder"><small>Please</small><small>Pick</small> <b>3</b></span><span class="TPTimePickerPlaceholder" data-tp-role="timePickerPlaceholder"><small>Please</small><small>Pick</small> <b>3</b></span></div></div>
 
 		<p>All this requires is:</p>
 
@@ -91,15 +91,15 @@ $schedule = array (
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
-	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;all&quot; href=&quot;css/jquery.timepicker.css&quot; /&gt;
+	&lt;link rel="stylesheet" type="text/css" media="all" href="css/jquery.timepicker.css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
-	&lt;div id=&quot;basic&quot;&gt;&lt;/div&gt;
-	&lt;script src=&quot;http://code.jquery.com/jquery-1.10.1.min.js&quot;&gt;&lt;/script&gt;
-	&lt;script src=&quot;js/jquery.timepicker.min.js&quot;&gt;&lt;/script&gt;
+	&lt;div id="basic"&gt;&lt;/div&gt;
+	&lt;script src="http://code.jquery.com/jquery-1.10.1.min.js"&gt;&lt;/script&gt;
+	&lt;script src="js/jquery.timepicker.min.js"&gt;&lt;/script&gt;
 	&lt;script&gt;
 	$(document).ready(function(){
-		$(&#039;#basic&#039;).timePicker();
+		$('#basic').timePicker();
 	});
 	&lt;/script&gt;
 &lt;/body&gt;
@@ -107,7 +107,7 @@ $schedule = array (
 
 
 
-		<hr />
+		<hr>
 
 		<h3>Bootstrap</h3>
 
@@ -115,7 +115,7 @@ $schedule = array (
 
 
 
-		<div class="well" id="bootstrap"></div>
+		<div class="well" id="bootstrap"><div class="BSDatePicker" data-tp-role="datePicker"><p class="TPDatePickerHtmlBefore" data-tp-role="datePickerHtmlBefore">First, choose three dates:</p><span class="BSDatePickerPrev" data-tp-role="datePickerPrev">&#9664;</span><span class="btn-group BSDatePickerDates" data-toggle="buttons-checkbox" data-tp-role="datePickerDates"><button type="button" class="btn BSDatePickerDate" data-date="1383836670072" data-tp-role="datePickerDate"><small>Nov</small> <b>7</b> <small>Thu</small></button><button type="button" class="btn BSDatePickerDate" data-date="1383923070072" data-tp-role="datePickerDate"><small>Nov</small> <b>8</b> <small>Fri</small></button><button type="button" class="btn BSDatePickerDate" data-date="1384009470072" data-tp-role="datePickerDate"><small>Nov</small> <b>9</b> <small>Sat</small></button><button type="button" class="btn BSDatePickerDate" data-date="1384095870072" data-tp-role="datePickerDate"><small>Nov</small> <b>10</b> <small>Sun</small></button><button type="button" class="btn BSDatePickerDate" data-date="1384182270072" data-tp-role="datePickerDate"><small>Nov</small> <b>11</b> <small>Mon</small></button></span><span class="BSDatePickerNext" data-tp-role="datePickerNext">&#9654;</span></div><div class="TPTimePicker" data-tp-role="timePicker"></div></div>
 
 
 		<p>
@@ -133,22 +133,22 @@ var today = new Date();
 // set a start date a week from now
 var todayPlus7 = new Date(today.getTime() + (24 * 60 * 60 * 1000)*7);
 
-$(&#039;#bootstrap&#039;).timePicker({
+$('#bootstrap').timePicker({
 	datePicker: {
 		startDate: todayPlus7,
 		dates: {
-			html: &#039;&lt;span class=&quot; btn-group&quot; data-toggle=&quot;buttons-checkbox&quot; /&gt;&#039;,
+			html: '&lt;span class=" btn-group" data-toggle="buttons-checkbox" /&gt;',
 		},
 		date: {
-			html: &#039;&lt;button type=&quot;button&quot; class=&quot;btn&quot; /&gt;&#039;,
-			selectedClassName: &#039;active&#039;,
+			html: '&lt;button type="button" class="btn" /&gt;',
+			selectedClassName: 'active',
 			addSelectedClassOnClick: false
 		}
 	},
 	timePicker: {
 		showPlaceholders: false,
 		time: {
-			html: &#039;&lt;span class=&quot;well&quot; /&gt;&#039;,
+			html: '&lt;span class="well" /&gt;',
 		}
 	}
 }); 	</code></pre>
@@ -159,24 +159,24 @@ $(&#039;#bootstrap&#039;).timePicker({
 
 		<pre><code>
 $.fn.timePicker.defaults.datePicker.startDate = todayPlus7;
-$.fn.timePicker.defaults.datePicker.date.html = &#039;&lt;button type=&quot;button&quot; class=&quot;btn&quot; /&gt;&#039;;
-$.fn.timePicker.defaults.datePicker.date.selectedClassName = &#039;active&#039;;
+$.fn.timePicker.defaults.datePicker.date.html = '&lt;button type="button" class="btn" /&gt;';
+$.fn.timePicker.defaults.datePicker.date.selectedClassName = 'active';
 $.fn.timePicker.defaults.datePicker.date.addSelectedClassOnClick = false;
-$.fn.timePicker.defaults.timePicker.time.html = &#039;&lt;span class=&quot;well&quot; /&gt;&#039;;
+$.fn.timePicker.defaults.timePicker.time.html = '&lt;span class="well" /&gt;';
 $.fn.timePicker.defaults.timePicker.showPlaceholders = false;
 
-$(&#039;#bootstrap&#039;).timePicker(); 	</code></pre>
+$('#bootstrap').timePicker(); 	</code></pre>
 
 
 
- 	<hr />
+ 	<hr>
 
  		<h3>Callback</h3>
 
 		<p>Here's a callback example:</p>
 
 		<div class="well">
-			<p id="callback"></p>
+			<p id="callback"><div class="TPDatePicker" data-tp-role="datePicker"><p class="TPDatePickerHtmlBefore" data-tp-role="datePickerHtmlBefore">First, choose three dates:</p><span class="TPDatePickerPrev" data-tp-role="datePickerPrev">&#9664;</span><span class="TPDatePickerDates" data-tp-role="datePickerDates"><span class="TPDatePickerDate" data-date="1383231870049" data-tp-role="datePickerDate"><small>Oct</small> <b>31</b> <small>Thu</small></span><span class="TPDatePickerDate" data-date="1383318270049" data-tp-role="datePickerDate"><small>Nov</small> <b>1</b> <small>Fri</small></span><span class="TPDatePickerDate" data-date="1383404670049" data-tp-role="datePickerDate"><small>Nov</small> <b>2</b> <small>Sat</small></span><span class="TPDatePickerDate" data-date="1383494670049" data-tp-role="datePickerDate"><small>Nov</small> <b>3</b> <small>Sun</small></span><span class="TPDatePickerDate" data-date="1383581070049" data-tp-role="datePickerDate"><small>Nov</small> <b>4</b> <small>Mon</small></span></span><span class="TPDatePickerNext" data-tp-role="datePickerNext">&#9654;</span></div><div class="TPTimePicker" data-tp-role="timePicker"><span class="TPTimePickerPlaceholder" data-tp-role="timePickerPlaceholder"><small>Please</small><small>Pick</small> <b>3</b></span><span class="TPTimePickerPlaceholder" data-tp-role="timePickerPlaceholder"><small>Please</small><small>Pick</small> <b>3</b></span><span class="TPTimePickerPlaceholder" data-tp-role="timePickerPlaceholder"><small>Please</small><small>Pick</small> <b>3</b></span></div></p>
 
 			<p>
 				<button id="btn-callback" type="button" disabled="disabled" class="btn btn-large">Disabled until 3 are selected</button>
@@ -187,10 +187,10 @@ $(&#039;#bootstrap&#039;).timePicker(); 	</code></pre>
 
 		<pre><code>
 &lt;!-- our html, including a disabled button --&gt;
-&lt;p id=&quot;callback&quot;&gt;&lt;/p&gt;
+&lt;p id="callback"&gt;&lt;/p&gt;
 
 &lt;p&gt;
-	&lt;button id=&quot;btn-callback&quot; type=&quot;button&quot; disabled=&quot;disabled&quot;&gt;Disabled until 3 are selected&lt;/button&gt;
+	&lt;button id="btn-callback" type="button" disabled="disabled"&gt;Disabled until 3 are selected&lt;/button&gt;
 &lt;/p&gt; 	</code></pre>
 
 
@@ -198,31 +198,31 @@ $(&#039;#bootstrap&#039;).timePicker(); 	</code></pre>
 
 <pre><code>
 // instantiate the timepicker
-$(&#039;#callback&#039;).timePicker({
+$('#callback').timePicker({
 	datePicker: {
 		date: {
 			// trigger this whenever a date item is clicked
 			finished: function(){
 				// get our whole date picker element
-				var  = $(&#039;#callback&#039;);
+				var $wrapper = $('#callback');
 
 				// get the timepickers element
-				var  = $(&#039;[data-tp-role=timePickerTime]&#039;, );
+				var $timePickers = $('[data-tp-role=timePickerTime]', $wrapper);
 
-				// if there are 3 of them, we&#039;re good!
-				if ( .length &gt;= 3 )
+				// if there are 3 of them, we're good!
+				if ( $timePickers.length &gt;= 3 )
 				{
 					// enable our button, and change the text
-					$(&#039;#btn-callback&#039;)
-					.prop(&#039;disabled&#039;, &#039;&#039;)
-					.text(&#039;3 selected!&#039;);
+					$('#btn-callback')
+					.prop('disabled', '')
+					.text('3 selected!');
 				}
 				else
 				{
 					// not enough dates selected, change the button back
-					$(&#039;#btn-callback&#039;)
-					.prop(&#039;disabled&#039;, &#039;disabled&#039;)
-					.text(&#039;Disabled until 3 are selected&#039;);
+					$('#btn-callback')
+					.prop('disabled', 'disabled')
+					.text('Disabled until 3 are selected');
 				}
 			}
 		}
@@ -231,7 +231,7 @@ $(&#039;#callback&#039;).timePicker({
 
 
 
-	<hr />
+	<hr>
 
 
 
@@ -264,7 +264,7 @@ $(&#039;#callback&#039;).timePicker({
 						<dt>className <i>Str</i></dt>
 						<dd>The class name that will be added to the date picker element, for styling. default: TPDatePicker</dd>
 					</dl>
-				<dt>prev:</dt>
+				</dd><dt>prev:</dt>
 				<dd>
 					This is the button that moves the dates back a day.
 					<dl>
@@ -387,9 +387,9 @@ $(&#039;#callback&#039;).timePicker({
 
 
 
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
-	<script src="js/jquery.timepicker.min.js"></script>
+	<script src="./index_files/jquery-1.10.1.min.js"></script>
+	<script src="./index_files/bootstrap.min.js"></script>
+	<script src="./index_files/jquery.timepicker.min.js"></script>
 	<script>
 	$(document).ready(function(){
 		$('#basic').timePicker();
@@ -464,5 +464,5 @@ $(&#039;#callback&#039;).timePicker({
 		});
 	});
 	</script>
-</body>
-</html>
+
+</body></html>
