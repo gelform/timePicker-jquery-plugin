@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,7 +79,7 @@ $schedule = array (
 
 		<h2>Examples:</h2>
 
-
+		<h3>Basic</h3>
 
 		<p>Here's a basic example:</p>
 
@@ -110,7 +109,7 @@ $schedule = array (
 
 		<hr />
 
-
+		<h3>Bootstrap</h3>
 
 		<p>Here's a bootstrap integration example:</p>
 
@@ -128,8 +127,15 @@ $schedule = array (
 		</p>
 
 		<pre><code>
+// get today
+var today = new Date();
+
+// set a start date a week from now
+var todayPlus7 = new Date(today.getTime() + (24 * 60 * 60 * 1000)*7);
+
 $(&#039;#bootstrap&#039;).timePicker({
 	datePicker: {
+		startDate: todayPlus7,
 		dates: {
 			html: &#039;&lt;span class=&quot; btn-group&quot; data-toggle=&quot;buttons-checkbox&quot; /&gt;&#039;,
 		},
@@ -140,6 +146,7 @@ $(&#039;#bootstrap&#039;).timePicker({
 		}
 	},
 	timePicker: {
+		showPlaceholders: false,
 		time: {
 			html: &#039;&lt;span class=&quot;well&quot; /&gt;&#039;,
 		}
@@ -151,12 +158,76 @@ $(&#039;#bootstrap&#039;).timePicker({
 
 
 		<pre><code>
+$.fn.timePicker.defaults.datePicker.startDate = todayPlus7;
 $.fn.timePicker.defaults.datePicker.date.html = &#039;&lt;button type=&quot;button&quot; class=&quot;btn&quot; /&gt;&#039;;
 $.fn.timePicker.defaults.datePicker.date.selectedClassName = &#039;active&#039;;
 $.fn.timePicker.defaults.datePicker.date.addSelectedClassOnClick = false;
 $.fn.timePicker.defaults.timePicker.time.html = &#039;&lt;span class=&quot;well&quot; /&gt;&#039;;
+$.fn.timePicker.defaults.timePicker.showPlaceholders = false;
 
 $(&#039;#bootstrap&#039;).timePicker(); 	</code></pre>
+
+
+
+ 	<hr />
+
+ 		<h3>Callback</h3>
+
+		<p>Here's a callback example:</p>
+
+		<div class="well">
+			<p id="callback"></p>
+
+			<p>
+				<button id="btn-callback" type="button" disabled="disabled" class="btn btn-large">Disabled until 3 are selected</button>
+			</p>
+		</div>
+
+		<p>For this we need a timepicker (in this case #callback) and a disabled button:</p>
+
+		<pre><code>
+&lt;!-- our html, including a disabled button --&gt;
+&lt;p id=&quot;callback&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;
+	&lt;button id=&quot;btn-callback&quot; type=&quot;button&quot; disabled=&quot;disabled&quot;&gt;Disabled until 3 are selected&lt;/button&gt;
+&lt;/p&gt; 	</code></pre>
+
+
+ 	<p>Then we define our callback when we instantiate our time picker:</p>
+
+<pre><code>
+// instantiate the timepicker
+$(&#039;#callback&#039;).timePicker({
+	datePicker: {
+		date: {
+			// trigger this whenever a date item is clicked
+			finished: function(){
+				// get our whole date picker element
+				var  = $(&#039;#callback&#039;);
+
+				// get the timepickers element
+				var  = $(&#039;[data-tp-role=timePickerTime]&#039;, );
+
+				// if there are 3 of them, we&#039;re good!
+				if ( .length &gt;= 3 )
+				{
+					// enable our button, and change the text
+					$(&#039;#btn-callback&#039;)
+					.prop(&#039;disabled&#039;, &#039;&#039;)
+					.text(&#039;3 selected!&#039;);
+				}
+				else
+				{
+					// not enough dates selected, change the button back
+					$(&#039;#btn-callback&#039;)
+					.prop(&#039;disabled&#039;, &#039;disabled&#039;)
+					.text(&#039;Disabled until 3 are selected&#039;);
+				}
+			}
+		}
+	}
+}); 	</code></pre>
 
 
 
@@ -177,6 +248,8 @@ $(&#039;#bootstrap&#039;).timePicker(); 	</code></pre>
 		<dd>
 			The element that contains the prev, next buttons, and the calendar boxes
 			<dl>
+				<dt>startDate <i>Date Obj</i></dt>
+				<dd>A date object of the date you want to start from. default: new Date()</dd>
 				<dt>numOfDates <i>Int</i></dt>
 				<dd>How many calendar boxes to show between the prev and next buttons. default: 5</dd>
 				<dt>allowPastDates <i>Bool</i></dt>
@@ -215,7 +288,7 @@ $(&#039;#bootstrap&#039;).timePicker(); 	</code></pre>
 						<dt>html <i>Html</i></dt>
 						<dd>What kind of html element should the dates wrapper be. default: &lt;span /&gt;</dd>
 						<dt>added <i>Func</i></dt>
-						<dd>A callback function triggered after the dates haev been added. this = a jQuery array of the date elements just added</dd>
+						<dd>A callback function triggered after the dates element have been added (only happens once). this = a jQuery array of the date elements just added</dd>
 					</dl>
 				</dd>
 				<dt>date:</dt>
@@ -323,8 +396,14 @@ $(&#039;#bootstrap&#039;).timePicker(); 	</code></pre>
 
 
 
+		var today = new Date();
+
+		// set a start date a week from now
+		var todayPlus7 = new Date(today.getTime() + (24 * 60 * 60 * 1000)*7);
+
 		$('#bootstrap').timePicker({
-			datePicker: {
+				datePicker: {
+					startDate: todayPlus7,
 				wrapper: {
 					className: 'BSDatePicker'
 				},
@@ -346,9 +425,40 @@ $(&#039;#bootstrap&#039;).timePicker(); 	</code></pre>
 				}
 			},
 			timePicker: {
+				showPlaceholders: false,
 				time: {
 					html: '<span class="well" />',
 					className: 'BSTimePickerTime'
+				},
+				placeholder: {
+					html: '<span class="well" />',
+					className: 'BSTimePickerPlaceholder'
+				}
+			}
+		});
+
+
+
+		$('#callback').timePicker({
+			datePicker: {
+				date: {
+					finished: function(){
+						var $wrapper = $('#callback');
+						var $timePickers = $('[data-tp-role=timePickerTime]', $wrapper);
+
+						if ( $timePickers.length >= 3 )
+						{
+							$('#btn-callback')
+							.prop('disabled', '')
+							.text('3 selected!');
+						}
+						else
+						{
+							$('#btn-callback')
+							.prop('disabled', 'disabled')
+							.text('Disabled until 3 are selected');
+						}
+					}
 				}
 			}
 		});
